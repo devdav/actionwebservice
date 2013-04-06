@@ -3,11 +3,9 @@ require 'action_web_service/protocol/soap_protocol/marshaler'
 require 'soap/streamHandler'
 require 'action_web_service/client/soap_client'
 
-unless const_defined? 'SOAP::SOAPNamespaceTag'
-  SOAP::SOAPNamespaceTag = 'env'
-  SOAP::XSDNamespaceTag = 'xsd'
-  SOAP::XSINamespaceTag = 'xsi'
-end
+# SOAP::SOAPNamespaceTag = 'env'
+# SOAP::XSDNamespaceTag = 'xsd'
+# SOAP::XSINamespaceTag = 'xsi'
 
 module ActionWebService # :nodoc:
   module API # :nodoc:
@@ -20,6 +18,13 @@ module ActionWebService # :nodoc:
 
   module Protocol # :nodoc:
     module Soap # :nodoc:
+
+      unless const_defined? :SOAPNamespaceTag
+        SOAPNamespaceTag = 'env'
+        XSDNamespaceTag = 'xsd'
+        XSINamespaceTag = 'xsi'
+      end
+
       def self.included(base)
         base.register_protocol(SoapProtocol)
         base.class_inheritable_option(:wsdl_service_name)
