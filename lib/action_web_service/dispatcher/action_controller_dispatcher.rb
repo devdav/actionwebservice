@@ -86,9 +86,9 @@ module ActionWebService # :nodoc:
 
           def send_web_service_error_response(ws_request, exception)
             if ws_request
-              unless self.class.web_service_exception_reporting
-                exception = DispatcherError.new("Internal server error (exception raised)")
-              end
+              # unless self.class.web_service_exception_reporting
+              #   exception = DispatcherError.new("Internal server error (exception raised)")
+              # end
               api_method = ws_request.api_method
               public_method_name = api_method ? api_method.public_name : ws_request.method_name
               return_type = ActionWebService::SignatureTypes.canonical_signature_entry(Exception, 0)
@@ -99,7 +99,8 @@ module ActionWebService # :nodoc:
                 message = exception.message
                 backtrace = "\nBacktrace:\n#{exception.backtrace.join("\n")}"
               else
-                message = "Exception raised"
+                # message = "Exception raised"
+                message = exception.message
                 backtrace = ""
               end
               render :status => 500, :text => "Internal protocol error: #{message}#{backtrace}"
