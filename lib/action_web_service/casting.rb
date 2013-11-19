@@ -36,7 +36,7 @@ module ActionWebService # :nodoc:
           elsif params.is_a?(Hash)
             api_method.expects.map do |type|
               val = params[type.name.to_s]
-              val ||= params[type.name.to_s.camelize]
+              val = params[type.name.to_s.camelize] if val.nil? and params.has_key?(type.name.to_s.camelize)
               cast(val, type)
             end
           end
